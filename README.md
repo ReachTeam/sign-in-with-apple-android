@@ -1,6 +1,6 @@
 # sign-in-with-apple-android
 
-allprojects {
+	allprojects {
 		repositories {
 			...
 			maven { url 'https://jitpack.io' }
