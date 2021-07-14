@@ -1,4 +1,4 @@
-# sign-in-with-apple-android
+# maven
 
 	allprojects {
 		repositories {
@@ -7,9 +7,10 @@
 		}
 	}
   
-  
+ 
+
+#dependencies
 
 	dependencies {
-	        implementation 'com.github.ReachTeam:sign-in-with-apple-android:1.0.0'
+	        implementation 'com.github.ReachTeam:sign-in-with-apple-android:1.2.0'
 	}
-
