@@ -2,17 +2,18 @@ package co.reachnetwork.applesignin
 
 import android.app.Activity
 import android.content.Intent
+import androidx.fragment.app.Fragment
 import co.reachnetwork.applesignin.internal.ErrorInfo
 import co.reachnetwork.applesignin.internal.SignInWithAppleActivity
 
 class SignInWithAppleClient(
-    private val activity: Activity,
     private val signInRequestCode: Int = 7919
 ) {
 
     private var callback: Callback? = null
 
     fun signIn(
+        activity: Activity,
         request: SignInWithAppleRequest,
         callback: Callback
     ) {
@@ -38,6 +39,37 @@ class SignInWithAppleClient(
         this.callback = callback
         activity.startActivityForResult(
             SignInWithAppleActivity.createIntent(activity, request),
+            signInRequestCode
+        )
+    }
+
+    fun signIn(
+        fragment: Fragment,
+        request: SignInWithAppleRequest,
+        callback: Callback
+    ) {
+        if (request.clientId.isBlank()) {
+            callback.onError(
+                SignInWithAppleException(
+                    ErrorInfo.INVALID_REQUEST,
+                    "client_id.required"
+                )
+            )
+            return
+        }
+        if (request.redirectUri.isBlank()) {
+            callback.onError(
+                SignInWithAppleException(
+                    ErrorInfo.INVALID_REQUEST,
+                    "redirect_uri.required"
+                )
+            )
+            return
+        }
+
+        this.callback = callback
+        fragment.startActivityForResult(
+            SignInWithAppleActivity.createIntent(fragment.requireContext(), request),
             signInRequestCode
         )
     }
